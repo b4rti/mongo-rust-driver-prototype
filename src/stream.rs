@@ -5,7 +5,7 @@ use std::net::{SocketAddr, TcpStream};
 
 #[cfg(feature = "ssl")]
 use openssl::ssl::{Ssl, SslMethod, SslContext, SslStream, SSL_OP_NO_COMPRESSION, SSL_OP_NO_SSLV2,
-                   SSL_OP_NO_SSLV3, SSL_VERIFY_NONE, SSL_VERIFY_PEER};
+                   SSL_OP_NO_SSLV3, SslVerifyMode};
 #[cfg(feature = "ssl")]
 use openssl::x509::X509_FILETYPE_PEM;
 
@@ -121,9 +121,9 @@ impl StreamConnector {
                 }
 
                 let verify = if verify_peer {
-                    SSL_VERIFY_PEER
+                    SslVerifyMode::SSL_VERIFY_PEER
                 } else {
-                    SSL_VERIFY_NONE
+                    SslVerifyMode::SSL_VERIFY_NONE
                 };
                 ssl_context.set_verify(verify);
 
